@@ -1,5 +1,5 @@
 ---
-title: My Data Stories
+title: Playing with LLM Prompts
 listing:
   contents: posts
   sort: date desc
