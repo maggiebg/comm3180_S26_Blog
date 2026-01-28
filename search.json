@@ -4,14 +4,21 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this blog"
+    "text": "This blog is about my explorations and experiments with the Language Models. I’m a sophomore at UPenn, studying Communications and Consumer Psychology."
+  },
+  {
+    "objectID": "posts/001_DOW1_Weather/DOW1.html",
+    "href": "posts/001_DOW1_Weather/DOW1.html",
+    "title": "Dataset of the Week #1: The Weather in Philadelphia",
+    "section": "",
+    "text": "My post\n\nprint('This is some code')\n\nThis is some code\n\n\n\nThe Next Section"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "My Data Stories",
+    "title": "Playing with LLM Prompts",
     "section": "",
-    "text": "A test post\n\n\n\nvisualization\n\ndata stories\n\n\n\nAn example post from a Jupyter notebook\n\n\n\n\n\nJan 12, 2026\n\n\nAn LLM User\n\n\n\n\n\nNo matching items"
+    "text": "Dataset of the Week #1: The Weather in Philadelphia\n\n\n\nDOW\n\nWeather\n\nPython\n\n\n\n\n\n\n\n\n\nJan 28, 2026\n\n\nMaggie\n\n\n\n\n\n\n\n\n\n\n\n\nMaggie’s Favorite Recipes\n\n\n\nFood\n\nCooking\n\nCollege\n\n\n\nHow Maggie utilizes her kitchen as a sophomore living in Harnwell.\n\n\n\n\n\nJan 28, 2026\n\n\nMaggie Goldman\n\n\n\n\n\n\n\n\n\n\n\n\nA test post\n\n\n\nvisualization\n\ndata stories\n\n\n\nAn example post from a Jupyter notebook\n\n\n\n\n\nJan 12, 2026\n\n\nAn LLM User\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/000_test_post/index.html",
@@ -26,5 +33,12 @@
     "title": "A test post",
     "section": "Stories from data",
     "text": "Stories from data\n\nLet’s set up some data\n\n\nx = ['A', 'B', 'C']\ny = [1, 5, 3]\n\n\nNow let’s visualize it\n\nplt.bar(x, y)\nplt.show()"
+  },
+  {
+    "objectID": "posts/002_testing/002_Recipies.html",
+    "href": "posts/002_testing/002_Recipies.html",
+    "title": "Maggie’s Favorite Recipes",
+    "section": "",
+    "text": "How Maggie cooks in the Harnwell kitchen:\n\nCooking can be hard for college students, but Maggie has it covered!"
   }
 ]
