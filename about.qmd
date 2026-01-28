@@ -5,4 +5,4 @@ about:
   template: jolla
 ---
 
-This blog is about my explorations and experiments with the Language Models
+This blog is about my explorations and experiments with the Language Models. I'm a sophomore at UPenn, studying Communications and Consumer Psychology.
