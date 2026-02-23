@@ -7,10 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Maggie Goldman">
-<meta name="dcterms.date" content="2026-01-28">
-<meta name="description" content="How Maggie utilizes her kitchen as a sophomore living in Harnwell.">
+<meta name="dcterms.date" content="2026-02-22">
 
-<title>Maggie’s Favorite Recipes – Playing with LLM Prompts!</title>
+<title>Dataset of the Week #3: Winter Olympics – Playing with LLM Prompts!</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -113,16 +147,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Maggie’s Favorite Recipes</h1>
-                  <div>
-        <div class="description">
-          How Maggie utilizes her kitchen as a sophomore living in Harnwell.
-        </div>
-      </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">Food</div>
-                <div class="quarto-category">Cooking</div>
-                <div class="quarto-category">College</div>
+      <h1 class="title">Dataset of the Week #3: Winter Olympics</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">DOW</div>
+                <div class="quarto-category">Python</div>
               </div>
                   </div>
   </div>
@@ -140,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 28, 2026</p>
+        <p class="date">February 22, 2026</p>
       </div>
     </div>
     
@@ -159,11 +187,108 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="how-maggie-cooks-in-the-harnwell-kitchen" class="level3">
-<h3 class="anchored" data-anchor-id="how-maggie-cooks-in-the-harnwell-kitchen">How Maggie cooks in the Harnwell kitchen:</h3>
-<ul>
-<li>Cooking can be hard for college students, but Maggie has it covered!</li>
-</ul>
+<p><img src="icehockey_1980.jpg" width="400/"> # Figure Skating in the Winter Olympics:</p>
+<section id="specifically-the-intersection-between-medals-and" class="level2">
+<h2 class="anchored" data-anchor-id="specifically-the-intersection-between-medals-and">### Specifically, the intersection between Medals and</h2>
+<p>The Winter Olympics are a huge, momentous event, where every country gets to showcase their athletic abilities and national pride. Among the most successful nations in Winter Olympic history are USA, Russia, Canada, and Germany, each demonstrating distinct medal patterns and success rate over time. Below, here’s an analysis of the medal distributions between these countries. First, I’m going to analyze which country has the most Gold Medals:</p>
+<div id="a3bcc34f-eb74-41df-8fa8-c4cb9e3aeb39" class="cell" data-execution_count="39">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cba16f79-1de3-44c6-9bd8-e95f71e652b9" class="cell" data-execution_count="40">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>wolympics_df <span class="op">=</span> pd.read_csv(<span class="st">'data/winter_olympics_medals.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="e3316aa2-be03-421a-ae5d-a421636c59d0" class="cell" data-execution_count="41">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gold <span class="op">=</span> wolympics_df[wolympics_df[<span class="st">"medal"</span>] <span class="op">==</span> <span class="st">"Gold"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="db37aebe-b3db-432e-b033-effe1257c3ab" class="cell" data-execution_count="42">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> [<span class="st">"USA"</span>, <span class="st">"CAN"</span>, <span class="st">"GER"</span>, <span class="st">"RUS"</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>gold_filtered <span class="op">=</span> gold[gold[<span class="st">"noc"</span>].isin(countries)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="dc817bdf-f03e-480f-901b-2ac6990acae3" class="cell" data-execution_count="43">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gold_counts <span class="op">=</span> gold_filtered[<span class="st">"noc"</span>].value_counts()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(gold_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>noc
+CAN    360
+USA    219
+GER    216
+RUS    123
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="a615ffb6-1ae7-47fb-afec-3378dd0a71d9" class="cell" data-execution_count="44">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>gold_counts.plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Gold Medals by Country"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Country"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of Gold Medals"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW3_WinterOlympics_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As seen from this graph, Canada takes the lead on gold medals, accounting for all events in the Winter Olympics, with a total of 360 medals. USA and Germany are next, with a total of 219 and 216, respectively. Russia comes in last with a count of 123. This accounts for gold medals in total, but wouldn’t it be interesting to see the amount of medals earned per year by each of these countries?</p>
+<div id="97f49f59-fa13-4805-8798-e37f0abf4726" class="cell" data-execution_count="47">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> [<span class="st">"USA"</span>, <span class="st">"CAN"</span>, <span class="st">"GER"</span>, <span class="st">"RUS"</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>medals_by_year <span class="op">=</span> (</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"noc"</span>].isin(countries)]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">"year"</span>, <span class="st">"noc"</span>])</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    .size()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    .unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>medals_by_year.plot(marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Medals by Country Over Time"</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of Medals"</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW3_WinterOlympics_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This chart shows clear differences in Winter Olympic medal performance among the United States, Canada, Germany, and Russia over time, with overall medal counts increasing significantly in recent decades. The United States consistently maintains the strongest performance, with steady growth from the early 20th century and particularly sharp increases after the 1980s. By the 2000s and 2010s, the U.S. reaches the highest medal totals among all four countries, reflecting its sustained investment in winter sports and broad athletic depth.</p>
+<p>Canada also demonstrates strong upward momentum, especially beginning in the late 1980s, eventually approaching U.S. medal counts in the 2000s and 2010s. Germany shows consistent but more moderate performance, with gradual growth and periodic peaks, reflecting its long-standing strength in technical winter sports. Russia’s medal counts appear lower or absent in earlier years but rise significantly after the 1990s, likely reflecting political transitions from the Soviet Union to modern Russia and renewed national athletic investment. Overall, the chart illustrates both long-term growth in Winter Olympic participation and shifting global dominance, with the United States emerging as the most consistently dominant country while Canada and Russia show strong modern-era gains.</p>
+<p>This chart encapsulates overall medals earned in Winter Olympic events, but what if we dived into Gold Medals earned by countries in the Winter Olympics?</p>
+<div id="2b2f27dc-fcf2-4f97-be3d-e18aed4d2415" class="cell" data-execution_count="38">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> [<span class="st">"USA"</span>, <span class="st">"CAN"</span>, <span class="st">"GER"</span>, <span class="st">"RUS"</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>gold_by_year.plot(marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Gold Medals by Country Over Time"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of Medals"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW3_WinterOlympics_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This chart shows the number of gold medals won over time by Canada, Germany, Russia, and the United States, highlighting more variability and sharper fluctuations compared to the total medal chart. While all four countries show relatively low and inconsistent gold medal counts in earlier Olympic years, there is a clear increase in gold medal success beginning in the 1990s and continuing into the 2000s and 2010s. Canada stands out with several dramatic peaks, including the highest single gold medal counts among all four countries, indicating periods of exceptional performance. The United States also shows steady gold medal success, though its peaks are generally lower than Canada’s. Germany maintains moderate but consistent gold medal wins, while Russia’s gold medal counts rise significantly in the modern era, reflecting its growing competitive strength.</p>
+<p>This chart is similar to the previous analysis in that it confirms the overall upward trend in Olympic success for all four countries, especially after the late 20th century, and highlights the increasing competitiveness of Canada and Russia. However, it differs because gold medals alone reveal more volatility and highlight specific moments of peak dominance rather than overall consistency. Unlike the total medal chart, where the United States appeared most consistently dominant, this gold medal chart shows Canada achieving some of the highest individual peaks, suggesting that while the U.S. earns many medals overall, Canada has experienced periods of greater gold medal dominance specifically.</p>
 
 
 </section>
