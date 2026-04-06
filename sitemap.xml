@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/about.html</loc>
-    <lastmod>2026-02-23T01:10:04.722Z</lastmod>
-  </url>
-  <url>
     <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/001_DOW1_Weather/DOW1.html</loc>
-    <lastmod>2026-02-23T01:10:04.723Z</lastmod>
+    <lastmod>2026-04-06T23:11:14.106Z</lastmod>
   </url>
   <url>
     <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/003_DOW2_big5questions/DOW2_notebook.html</loc>
-    <lastmod>2026-02-23T01:10:04.727Z</lastmod>
+    <lastmod>2026-04-06T23:11:14.108Z</lastmod>
   </url>
   <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/000_test_post/index.html</loc>
-    <lastmod>2026-02-23T01:10:04.723Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/index.html</loc>
-    <lastmod>2026-02-23T01:10:04.722Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/003_DOW2_big5questions/DOW2_big5.html</loc>
-    <lastmod>2026-02-23T01:10:04.726Z</lastmod>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/005_DOW4_CrashIncidents/data/school-finder.html</loc>
+    <lastmod>2026-04-06T23:11:14.829Z</lastmod>
   </url>
   <url>
     <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/004_DOW3_WinterOlympics/DOW3_WinterOlympics.html</loc>
-    <lastmod>2026-02-23T01:10:05.102Z</lastmod>
+    <lastmod>2026-04-06T23:11:14.463Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/000_test_post/index.html</loc>
+    <lastmod>2026-04-06T23:11:14.106Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/about.html</loc>
+    <lastmod>2026-04-06T23:11:14.105Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/index.html</loc>
+    <lastmod>2026-04-06T23:11:14.105Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/006_DOW5_PhillyShootings/DOW5.html</loc>
+    <lastmod>2026-04-06T23:11:14.833Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/005_DOW4_CrashIncidents/DOW_4.html</loc>
+    <lastmod>2026-04-06T23:11:14.595Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/003_DOW2_big5questions/DOW2_big5.html</loc>
+    <lastmod>2026-04-06T23:11:14.107Z</lastmod>
   </url>
   <url>
     <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/002_testing/002_Recipies.html</loc>
-    <lastmod>2026-02-23T01:10:04.725Z</lastmod>
+    <lastmod>2026-04-06T23:11:14.106Z</lastmod>
   </url>
 </urlset>
