@@ -1,5 +1,4 @@
----
-area_of_interest: null
+\area_of_interest: null
 category:
 - Education
 created: '2014-12-08T21:55:55.121780'
@@ -26,4 +25,4 @@ tags:
 time_period: null
 title: School Finder
 usage: Public Use; Free
----
+
