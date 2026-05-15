@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/about.html</loc>
-    <lastmod>2026-05-15T04:12:58.465Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/003_DOW2_big5questions/DOW2_big5.html</loc>
-    <lastmod>2026-05-15T04:12:58.468Z</lastmod>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/index.html</loc>
+    <lastmod>2026-05-15T04:16:58.940Z</lastmod>
   </url>
   <url>
     <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/001_DOW1_Weather/DOW1.html</loc>
-    <lastmod>2026-05-15T04:12:58.465Z</lastmod>
+    <lastmod>2026-05-15T04:16:58.940Z</lastmod>
   </url>
   <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/005_DOW4_CrashIncidents/data/school-finder.html</loc>
-    <lastmod>2026-05-15T04:12:59.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/004_DOW3_WinterOlympics/DOW3_WinterOlympics.html</loc>
-    <lastmod>2026-05-15T04:12:58.868Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/006_DOW5_PhillyShootings/DOW5.html</loc>
-    <lastmod>2026-05-15T04:12:59.281Z</lastmod>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/003_DOW2_big5questions/DOW2_big5.html</loc>
+    <lastmod>2026-05-15T04:16:58.943Z</lastmod>
   </url>
   <url>
     <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/005_DOW4_CrashIncidents/DOW_4.html</loc>
-    <lastmod>2026-05-15T04:12:59.016Z</lastmod>
+    <lastmod>2026-05-15T04:16:59.426Z</lastmod>
   </url>
   <url>
-    <loc>https://maggiebg.github.io/comm3180_S26_Blog/index.html</loc>
-    <lastmod>2026-05-15T04:12:58.465Z</lastmod>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/006_DOW5_PhillyShootings/DOW5.html</loc>
+    <lastmod>2026-05-15T04:16:59.661Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/posts/004_DOW3_WinterOlympics/DOW3_WinterOlympics.html</loc>
+    <lastmod>2026-05-15T04:16:59.296Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maggiebg.github.io/comm3180_S26_Blog/about.html</loc>
+    <lastmod>2026-05-15T04:16:58.940Z</lastmod>
   </url>
 </urlset>
