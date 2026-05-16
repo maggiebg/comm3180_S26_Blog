@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maggie Goldman">
+<meta name="dcterms.date" content="2026-05-12">
+
+<title>Dataset of the Week #6: Rhode Beauty – Playing with LLM Prompts!</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-5ad88d202d2e2d9049176db20e461fc5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Playing with LLM Prompts!</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Dataset of the Week #6: Rhode Beauty</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">DOW</div>
+                <div class="quarto-category">Python</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Maggie Goldman </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 12, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>This dataset examines whether major Rhode-related events are associated with changes in Google search interest over time. I collected monthly Google Trends data for five search terms connected to Rhode and Hailey Bieber’s beauty brand: “rhode skin,” “rhode lip treatment,” “rhode phone case,” “glazed donut skin,” and “Hailey Bieber skincare.” I then created a second event timeline dataset that includes major Rhode moments, such as the brand launch, product drops, viral beauty trends, the Lip Case launch, the e.l.f. Beauty acquisition, and Rhode’s Sephora expansion.</p>
+<p>The goal of this project is to compare public search behavior with Rhode’s cultural and commercial timeline. Rather than assuming that every product launch automatically creates a search spike, this dataset asks a more specific question: when do Rhode-related searches rise, and do those spikes line up with official events, viral beauty discourse, or broader celebrity attention?</p>
+<div id="085d4eaf-5b86-4c7d-b9de-2f6ea94dfc3c" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>trends <span class="op">=</span> pd.read_csv(<span class="st">"rhodebeauty.csv"</span>, skiprows<span class="op">=</span><span class="dv">1</span>, header<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>trends.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2021-05-01</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2021-06-01</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2021-07-01</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2021-08-01</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2021-09-01</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="ed358231-e30f-4743-937c-b0b8be729df3" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>trends.columns <span class="op">=</span> [</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"date"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rhode_skin"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rhode_lip_treatment"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rhode_phone_case"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"glazed_donut_skin"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hailey_bieber_skincare"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>trends[<span class="st">"date"</span>] <span class="op">=</span> pd.to_datetime(trends[<span class="st">"date"</span>])</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>trends.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">rhode_skin</th>
+<th data-quarto-table-cell-role="th">rhode_lip_treatment</th>
+<th data-quarto-table-cell-role="th">rhode_phone_case</th>
+<th data-quarto-table-cell-role="th">glazed_donut_skin</th>
+<th data-quarto-table-cell-role="th">hailey_bieber_skincare</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2021-05-01</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2021-06-01</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2021-07-01</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2021-08-01</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2021-09-01</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="520bc19b-2b86-459e-a605-b3e5e5f77000" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>trends_long <span class="op">=</span> trends.melt(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span><span class="st">"date"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">"search_term"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    value_name<span class="op">=</span><span class="st">"google_trends_interest"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>trends_long.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th">google_trends_interest</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2021-05-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2021-06-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2021-07-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2021-08-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2021-09-01</td>
+<td>rhode_skin</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="b7561375-3a0f-4115-ae37-c6fc6c65e040" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trends_long[<span class="st">"search_term"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>search_term
+rhode_skin                61
+rhode_lip_treatment       61
+rhode_phone_case          61
+glazed_donut_skin         61
+hailey_bieber_skincare    61
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="1d24e459-f546-4282-8b66-8cfec144e4a7" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>trends_long.sort_values([<span class="st">"date"</span>, <span class="st">"search_term"</span>]).head(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th">google_trends_interest</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">183</th>
+<td>2021-05-01</td>
+<td>glazed_donut_skin</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">244</th>
+<td>2021-05-01</td>
+<td>hailey_bieber_skincare</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">61</th>
+<td>2021-05-01</td>
+<td>rhode_lip_treatment</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">122</th>
+<td>2021-05-01</td>
+<td>rhode_phone_case</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2021-05-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">184</th>
+<td>2021-06-01</td>
+<td>glazed_donut_skin</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">245</th>
+<td>2021-06-01</td>
+<td>hailey_bieber_skincare</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">62</th>
+<td>2021-06-01</td>
+<td>rhode_lip_treatment</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">123</th>
+<td>2021-06-01</td>
+<td>rhode_phone_case</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2021-06-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">185</th>
+<td>2021-07-01</td>
+<td>glazed_donut_skin</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">246</th>
+<td>2021-07-01</td>
+<td>hailey_bieber_skincare</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">63</th>
+<td>2021-07-01</td>
+<td>rhode_lip_treatment</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">124</th>
+<td>2021-07-01</td>
+<td>rhode_phone_case</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2021-07-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">186</th>
+<td>2021-08-01</td>
+<td>glazed_donut_skin</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">247</th>
+<td>2021-08-01</td>
+<td>hailey_bieber_skincare</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">64</th>
+<td>2021-08-01</td>
+<td>rhode_lip_treatment</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">125</th>
+<td>2021-08-01</td>
+<td>rhode_phone_case</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2021-08-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="e87cc140-8d23-4b22-abe7-2e8360e0d6cc" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>trends_long[<span class="st">"month"</span>] <span class="op">=</span> trends_long[<span class="st">"date"</span>].dt.to_period(<span class="st">"M"</span>).dt.start_time</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>trends_long.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th">google_trends_interest</th>
+<th data-quarto-table-cell-role="th">month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2021-05-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-05-01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2021-06-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-06-01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2021-07-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-07-01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2021-08-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-08-01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2021-09-01</td>
+<td>rhode_skin</td>
+<td>1</td>
+<td>2021-09-01</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="bc8b97eb-ed3f-4a84-b375-d5f6706d639d" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>events <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"date"</span>: pd.to_datetime([</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2022-01-27"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2022-06-15"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2022-06-15"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2023-03-22"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2023-08-28"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2023-09-28"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2024-01-25"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2024-02-27"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2024-06-20"</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2024-10-28"</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2025-01-30"</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2025-05-28"</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"2025-09-04"</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    ]),</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"event_name"</span>: [</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Glazed donut skin identified as major Hailey Bieber beauty trend"</span>,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Rhode officially launches"</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Peptide Lip Treatment included in first Rhode drop"</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Rhode reports major waitlist and expansion momentum"</span>,</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Strawberry Glaze Peptide Lip Treatment launches with Krispy Kreme"</span>,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Rhode Peptide Lip Tint launches"</span>,</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Pineapple Refresh Cleanser becomes available"</span>,</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Rhode Lip Case launches"</span>,</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Rhode Pocket Blush launches"</span>,</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Rhode Barrier Butter launches"</span>,</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Peptide Lip Shape launches"</span>,</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">"e.l.f. Beauty announces Rhode acquisition"</span>,</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Rhode launches at Sephora U.S. and Canada"</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"event_type"</span>: [</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">"viral_beauty_trend"</span>,</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand_launch"</span>,</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"product_launch"</span>,</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">"business_growth"</span>,</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">"product_collab"</span>,</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        <span class="st">"product_launch"</span>,</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"skincare_product_launch"</span>,</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">"viral_product_launch"</span>,</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">"color_cosmetics_launch"</span>,</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"skincare_product_launch"</span>,</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lip_product_launch"</span>,</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">"business_event"</span>,</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">"retail_expansion"</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"related_search_term"</span>: [</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        <span class="st">"glazed_donut_skin"</span>,</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_skin"</span>,</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_lip_treatment"</span>,</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_skin"</span>,</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_lip_treatment"</span>,</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_lip_treatment"</span>,</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_skin"</span>,</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_phone_case"</span>,</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>        <span class="st">"hailey_bieber_skincare"</span>,</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_skin"</span>,</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_lip_treatment"</span>,</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rhode_skin"</span>,</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>        <span class="st">"hailey_bieber_skincare"</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>events</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">event_name</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">related_search_term</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2022-01-27</td>
+<td>Glazed donut skin identified as major Hailey B...</td>
+<td>viral_beauty_trend</td>
+<td>glazed_donut_skin</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2022-06-15</td>
+<td>Rhode officially launches</td>
+<td>brand_launch</td>
+<td>rhode_skin</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2022-06-15</td>
+<td>Peptide Lip Treatment included in first Rhode ...</td>
+<td>product_launch</td>
+<td>rhode_lip_treatment</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2023-03-22</td>
+<td>Rhode reports major waitlist and expansion mom...</td>
+<td>business_growth</td>
+<td>rhode_skin</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2023-08-28</td>
+<td>Strawberry Glaze Peptide Lip Treatment launche...</td>
+<td>product_collab</td>
+<td>rhode_lip_treatment</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>2023-09-28</td>
+<td>Rhode Peptide Lip Tint launches</td>
+<td>product_launch</td>
+<td>rhode_lip_treatment</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>2024-01-25</td>
+<td>Pineapple Refresh Cleanser becomes available</td>
+<td>skincare_product_launch</td>
+<td>rhode_skin</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>2024-02-27</td>
+<td>Rhode Lip Case launches</td>
+<td>viral_product_launch</td>
+<td>rhode_phone_case</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>2024-06-20</td>
+<td>Rhode Pocket Blush launches</td>
+<td>color_cosmetics_launch</td>
+<td>hailey_bieber_skincare</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>2024-10-28</td>
+<td>Rhode Barrier Butter launches</td>
+<td>skincare_product_launch</td>
+<td>rhode_skin</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>2025-01-30</td>
+<td>Peptide Lip Shape launches</td>
+<td>lip_product_launch</td>
+<td>rhode_lip_treatment</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>2025-05-28</td>
+<td>e.l.f. Beauty announces Rhode acquisition</td>
+<td>business_event</td>
+<td>rhode_skin</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>2025-09-04</td>
+<td>Rhode launches at Sephora U.S. and Canada</td>
+<td>retail_expansion</td>
+<td>hailey_bieber_skincare</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="6e719135-dd22-46a8-a0ea-7198fc22ab6d" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>events[<span class="st">"month"</span>] <span class="op">=</span> events[<span class="st">"date"</span>].dt.to_period(<span class="st">"M"</span>).dt.start_time</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>events</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">event_name</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">related_search_term</th>
+<th data-quarto-table-cell-role="th">month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2022-01-27</td>
+<td>Glazed donut skin identified as major Hailey B...</td>
+<td>viral_beauty_trend</td>
+<td>glazed_donut_skin</td>
+<td>2022-01-01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2022-06-15</td>
+<td>Rhode officially launches</td>
+<td>brand_launch</td>
+<td>rhode_skin</td>
+<td>2022-06-01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2022-06-15</td>
+<td>Peptide Lip Treatment included in first Rhode ...</td>
+<td>product_launch</td>
+<td>rhode_lip_treatment</td>
+<td>2022-06-01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2023-03-22</td>
+<td>Rhode reports major waitlist and expansion mom...</td>
+<td>business_growth</td>
+<td>rhode_skin</td>
+<td>2023-03-01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2023-08-28</td>
+<td>Strawberry Glaze Peptide Lip Treatment launche...</td>
+<td>product_collab</td>
+<td>rhode_lip_treatment</td>
+<td>2023-08-01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>2023-09-28</td>
+<td>Rhode Peptide Lip Tint launches</td>
+<td>product_launch</td>
+<td>rhode_lip_treatment</td>
+<td>2023-09-01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>2024-01-25</td>
+<td>Pineapple Refresh Cleanser becomes available</td>
+<td>skincare_product_launch</td>
+<td>rhode_skin</td>
+<td>2024-01-01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>2024-02-27</td>
+<td>Rhode Lip Case launches</td>
+<td>viral_product_launch</td>
+<td>rhode_phone_case</td>
+<td>2024-02-01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>2024-06-20</td>
+<td>Rhode Pocket Blush launches</td>
+<td>color_cosmetics_launch</td>
+<td>hailey_bieber_skincare</td>
+<td>2024-06-01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>2024-10-28</td>
+<td>Rhode Barrier Butter launches</td>
+<td>skincare_product_launch</td>
+<td>rhode_skin</td>
+<td>2024-10-01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">10</th>
+<td>2025-01-30</td>
+<td>Peptide Lip Shape launches</td>
+<td>lip_product_launch</td>
+<td>rhode_lip_treatment</td>
+<td>2025-01-01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">11</th>
+<td>2025-05-28</td>
+<td>e.l.f. Beauty announces Rhode acquisition</td>
+<td>business_event</td>
+<td>rhode_skin</td>
+<td>2025-05-01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>2025-09-04</td>
+<td>Rhode launches at Sephora U.S. and Canada</td>
+<td>retail_expansion</td>
+<td>hailey_bieber_skincare</td>
+<td>2025-09-01</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="546b1264-577e-4d54-b6b8-16e2afb75108" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> trends_long.merge(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    events,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span>[<span class="st">"month"</span>, <span class="st">"search_term"</span>],</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span>[<span class="st">"month"</span>, <span class="st">"related_search_term"</span>],</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    suffixes<span class="op">=</span>(<span class="st">"_trend"</span>, <span class="st">"_event"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>merged.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date_trend</th>
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th">google_trends_interest</th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">date_event</th>
+<th data-quarto-table-cell-role="th">event_name</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">related_search_term</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2021-05-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-05-01</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2021-06-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-06-01</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2021-07-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-07-01</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2021-08-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-08-01</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2021-09-01</td>
+<td>rhode_skin</td>
+<td>1</td>
+<td>2021-09-01</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="4c5c3c9a-0714-410e-9eeb-e852a69c3327" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>merged[<span class="st">"event_name"</span>] <span class="op">=</span> merged[<span class="st">"event_name"</span>].fillna(<span class="st">"none"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>merged[<span class="st">"event_type"</span>] <span class="op">=</span> merged[<span class="st">"event_type"</span>].fillna(<span class="st">"none"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>merged[<span class="st">"related_search_term"</span>] <span class="op">=</span> merged[<span class="st">"related_search_term"</span>].fillna(<span class="st">"none"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>merged[<span class="st">"is_event_month"</span>] <span class="op">=</span> merged[<span class="st">"event_type"</span>].<span class="bu">apply</span>(</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="dv">0</span> <span class="cf">if</span> x <span class="op">==</span> <span class="st">"none"</span> <span class="cf">else</span> <span class="dv">1</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>merged.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date_trend</th>
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th">google_trends_interest</th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">date_event</th>
+<th data-quarto-table-cell-role="th">event_name</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">related_search_term</th>
+<th data-quarto-table-cell-role="th">is_event_month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2021-05-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-05-01</td>
+<td>NaT</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2021-06-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-06-01</td>
+<td>NaT</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2021-07-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-07-01</td>
+<td>NaT</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2021-08-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>2021-08-01</td>
+<td>NaT</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2021-09-01</td>
+<td>rhode_skin</td>
+<td>1</td>
+<td>2021-09-01</td>
+<td>NaT</td>
+<td>none</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="e0005508-e52a-4031-91da-0786b845aa58" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>final_dataset <span class="op">=</span> merged[[</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"month"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"search_term"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"google_trends_interest"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"event_name"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"event_type"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"is_event_month"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>]].copy()</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>final_dataset.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th">google_trends_interest</th>
+<th data-quarto-table-cell-role="th">event_name</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">is_event_month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>2021-05-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>2021-06-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>2021-07-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>2021-08-01</td>
+<td>rhode_skin</td>
+<td>2</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>2021-09-01</td>
+<td>rhode_skin</td>
+<td>1</td>
+<td>none</td>
+<td>none</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="9dfda8e0-19ac-4444-9f4b-ba86b4174712" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>final_dataset.to_csv(<span class="st">"rhode_google_trends_event_dataset.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a99ad3c4-0107-4ccb-beae-813a75d97877" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>event_only_dataset <span class="op">=</span> final_dataset[</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    final_dataset[<span class="st">"is_event_month"</span>] <span class="op">==</span> <span class="dv">1</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>].sort_values([<span class="st">"month"</span>, <span class="st">"search_term"</span>])</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>event_only_dataset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th">google_trends_interest</th>
+<th data-quarto-table-cell-role="th">event_name</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">is_event_month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">191</th>
+<td>2022-01-01</td>
+<td>glazed_donut_skin</td>
+<td>0</td>
+<td>Glazed donut skin identified as major Hailey B...</td>
+<td>viral_beauty_trend</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">74</th>
+<td>2022-06-01</td>
+<td>rhode_lip_treatment</td>
+<td>3</td>
+<td>Peptide Lip Treatment included in first Rhode ...</td>
+<td>product_launch</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">13</th>
+<td>2022-06-01</td>
+<td>rhode_skin</td>
+<td>35</td>
+<td>Rhode officially launches</td>
+<td>brand_launch</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">22</th>
+<td>2023-03-01</td>
+<td>rhode_skin</td>
+<td>13</td>
+<td>Rhode reports major waitlist and expansion mom...</td>
+<td>business_growth</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">88</th>
+<td>2023-08-01</td>
+<td>rhode_lip_treatment</td>
+<td>9</td>
+<td>Strawberry Glaze Peptide Lip Treatment launche...</td>
+<td>product_collab</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">89</th>
+<td>2023-09-01</td>
+<td>rhode_lip_treatment</td>
+<td>14</td>
+<td>Rhode Peptide Lip Tint launches</td>
+<td>product_launch</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">32</th>
+<td>2024-01-01</td>
+<td>rhode_skin</td>
+<td>22</td>
+<td>Pineapple Refresh Cleanser becomes available</td>
+<td>skincare_product_launch</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">155</th>
+<td>2024-02-01</td>
+<td>rhode_phone_case</td>
+<td>3</td>
+<td>Rhode Lip Case launches</td>
+<td>viral_product_launch</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">281</th>
+<td>2024-06-01</td>
+<td>hailey_bieber_skincare</td>
+<td>0</td>
+<td>Rhode Pocket Blush launches</td>
+<td>color_cosmetics_launch</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">41</th>
+<td>2024-10-01</td>
+<td>rhode_skin</td>
+<td>21</td>
+<td>Rhode Barrier Butter launches</td>
+<td>skincare_product_launch</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">105</th>
+<td>2025-01-01</td>
+<td>rhode_lip_treatment</td>
+<td>12</td>
+<td>Peptide Lip Shape launches</td>
+<td>lip_product_launch</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">48</th>
+<td>2025-05-01</td>
+<td>rhode_skin</td>
+<td>29</td>
+<td>e.l.f. Beauty announces Rhode acquisition</td>
+<td>business_event</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">296</th>
+<td>2025-09-01</td>
+<td>hailey_bieber_skincare</td>
+<td>0</td>
+<td>Rhode launches at Sephora U.S. and Canada</td>
+<td>retail_expansion</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="1fd34cd2-a92e-4f4f-8b1b-123c5639e464" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>event_only_dataset.to_csv(<span class="st">"rhode_event_only_dataset.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This dataset combines two forms of temporal data: Google Trends search interest and a manually coded timeline of Rhode-related events. The Google Trends data measures public search attention over time, while the event timeline identifies moments when Rhode entered beauty, fashion, or business discourse through product launches, viral trends, and major brand announcements.</p>
+<p>Each row in the final dataset represents one search term in one month. By coding whether each month was an event month or a non-event month, the dataset allows me to compare search behavior during months when Rhode had a major cultural or product moment against months with no major event.</p>
+<div id="c9e36cad-48ca-44de-801d-3b7dcc1649cf" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>term <span class="op">=</span> <span class="st">"rhode_phone_case"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>subset <span class="op">=</span> final_dataset[final_dataset[<span class="st">"search_term"</span>] <span class="op">==</span> term].copy()</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>event_months <span class="op">=</span> subset[subset[<span class="st">"is_event_month"</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plt.plot(</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    subset[<span class="st">"month"</span>],</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    subset[<span class="st">"google_trends_interest"</span>],</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    marker<span class="op">=</span><span class="st">"o"</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span>term</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> event_months.iterrows():</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    plt.axvline(row[<span class="st">"month"</span>], linestyle<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    plt.text(</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>        row[<span class="st">"month"</span>],</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>        row[<span class="st">"google_trends_interest"</span>] <span class="op">+</span> <span class="dv">3</span>,</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        row[<span class="st">"event_name"</span>],</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        rotation<span class="op">=</span><span class="dv">90</span>,</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>        verticalalignment<span class="op">=</span><span class="st">"bottom"</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Google Search Interest for Rhode Phone Case with Event Timeline"</span>)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Month"</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Google Trends Interest"</span>)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW6_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This graph shows that the official Rhode Lip Case launch does not correspond to the largest search spike for “rhode phone case.” Instead, the biggest spike happens much earlier, suggesting that search interest may have been shaped by anticipation, social media discussion, or unrelated uses of the phrase before the official launch. This complicates the event-based hypothesis: product launches matter, but search behavior does not always follow the exact timing of official brand events.</p>
+<div id="fa3d2626-3fe0-49c2-b487-e9253d6b7156" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> term <span class="kw">in</span> final_dataset[<span class="st">"search_term"</span>].unique():</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> final_dataset[final_dataset[<span class="st">"search_term"</span>] <span class="op">==</span> term].copy()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    event_months <span class="op">=</span> subset[subset[<span class="st">"is_event_month"</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    plt.plot(</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        subset[<span class="st">"month"</span>],</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        subset[<span class="st">"google_trends_interest"</span>],</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span><span class="st">"o"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span>term</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, row <span class="kw">in</span> event_months.iterrows():</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        plt.axvline(row[<span class="st">"month"</span>], linestyle<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        plt.text(</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">"month"</span>],</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">"google_trends_interest"</span>] <span class="op">+</span> <span class="dv">3</span>,</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">"event_name"</span>],</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>            rotation<span class="op">=</span><span class="dv">90</span>,</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>            verticalalignment<span class="op">=</span><span class="st">"bottom"</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f"Google Search Interest for </span><span class="sc">{</span>term<span class="sc">}</span><span class="ss"> with Rhode Event Timeline"</span>)</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Month"</span>)</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Google Trends Interest"</span>)</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW6_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW6_files/figure-html/cell-17-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW6_files/figure-html/cell-17-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/tmp/ipykernel_1383341/966832668.py:29: UserWarning: Tight layout not applied. The bottom and top margins cannot be made large enough to accommodate all Axes decorations.
+  plt.tight_layout()</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW6_files/figure-html/cell-17-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW6_files/figure-html/cell-17-output-6.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>These timeline charts show that Rhode-related search interest does not rise evenly over time. Instead, attention appears clustered around specific moments: brand launches, product drops, viral beauty phrases, and business events. This supports the idea that Rhode’s visibility is event-driven. Public search interest seems to respond not only to the existence of the brand, but to moments when Rhode becomes newly relevant through products, scarcity, celebrity branding, or media coverage.</p>
+<div id="f4e67109-aba4-4249-95ce-27d657aa7766" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">7</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> term <span class="kw">in</span> final_dataset[<span class="st">"search_term"</span>].unique():</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> final_dataset[final_dataset[<span class="st">"search_term"</span>] <span class="op">==</span> term]</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    plt.plot(</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        subset[<span class="st">"month"</span>],</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        subset[<span class="st">"google_trends_interest"</span>],</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span><span class="st">"o"</span>,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span>term</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Google Trends Search Interest for Rhode-Related Terms Over Time"</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Month"</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Google Trends Interest"</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW6_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This graph compares different kinds of Rhode-related attention. “Rhode skin” captures brand-level interest, while “rhode lip treatment” and “rhode phone case” capture product-specific interest. “Glazed donut skin” reflects a broader beauty aesthetic associated with Hailey Bieber, and “Hailey Bieber skincare” connects the brand to celebrity-driven search behavior. Comparing these terms helps show whether public interest is centered on the brand, the products, or the celebrity/aesthetic surrounding them.</p>
+<div id="57474ed2-24f2-4ec9-b267-982ea543071d" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>event_comparison <span class="op">=</span> final_dataset.groupby(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"search_term"</span>, <span class="st">"is_event_month"</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>)[<span class="st">"google_trends_interest"</span>].mean().reset_index()</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>event_comparison</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th">is_event_month</th>
+<th data-quarto-table-cell-role="th">google_trends_interest</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>glazed_donut_skin</td>
+<td>0</td>
+<td>0.433333</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>glazed_donut_skin</td>
+<td>1</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>hailey_bieber_skincare</td>
+<td>0</td>
+<td>0.610169</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>hailey_bieber_skincare</td>
+<td>1</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>rhode_lip_treatment</td>
+<td>0</td>
+<td>10.263158</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>rhode_lip_treatment</td>
+<td>1</td>
+<td>9.500000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>rhode_phone_case</td>
+<td>0</td>
+<td>3.183333</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">7</th>
+<td>rhode_phone_case</td>
+<td>1</td>
+<td>3.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>rhode_skin</td>
+<td>0</td>
+<td>22.767857</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">9</th>
+<td>rhode_skin</td>
+<td>1</td>
+<td>24.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="caa0b14c-59e3-43cf-8c3b-3ce480d5d42c" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>event_comparison_pivot <span class="op">=</span> event_comparison.pivot(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">"search_term"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">"is_event_month"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"google_trends_interest"</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>event_comparison_pivot <span class="op">=</span> event_comparison_pivot.rename(columns<span class="op">=</span>{</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: <span class="st">"avg_non_event_month_interest"</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>: <span class="st">"avg_event_month_interest"</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>event_comparison_pivot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">is_event_month</th>
+<th data-quarto-table-cell-role="th">avg_non_event_month_interest</th>
+<th data-quarto-table-cell-role="th">avg_event_month_interest</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">glazed_donut_skin</th>
+<td>0.433333</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">hailey_bieber_skincare</th>
+<td>0.610169</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">rhode_lip_treatment</th>
+<td>10.263158</td>
+<td>9.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">rhode_phone_case</th>
+<td>3.183333</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">rhode_skin</th>
+<td>22.767857</td>
+<td>24.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="54341358-53aa-4ed6-8f80-27589f96c74e" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>event_comparison_pivot.plot(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">"bar"</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Average Google Search Interest: Event Months vs Non-Event Months"</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Search Term"</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Average Google Trends Interest"</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW6_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This chart shows that event months do not automatically produce higher search interest for every Rhode-related term. The strongest increase appears for “rhode_skin,” suggesting that major brand-level events are more likely to boost general searches for Rhode. However, product-specific terms like “rhode_lip_treatment” and “rhode_phone_case” do not show the same clear increase, which may mean that search interest happens before or after official launch months as products spread through social media. Overall, the data suggests that Rhode’s visibility is partly connected to events, but also shaped by broader celebrity and viral beauty culture.</p>
+<p>Next, we’re going to establish the correlation between events and search interest.</p>
+<div id="6a60a106-6572-41c2-b0bd-33c58679750a" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>correlation_table <span class="op">=</span> final_dataset.groupby(<span class="st">"search_term"</span>).<span class="bu">apply</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: x[<span class="st">"is_event_month"</span>].corr(x[<span class="st">"google_trends_interest"</span>])</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>correlation_table.columns <span class="op">=</span> [</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"search_term"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"correlation_between_event_month_and_search_interest"</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>correlation_table <span class="op">=</span> correlation_table.sort_values(</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"correlation_between_event_month_and_search_interest"</span>,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    ascending<span class="op">=</span><span class="va">False</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>correlation_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">search_term</th>
+<th data-quarto-table-cell-role="th">correlation_between_event_month_and_search_interest</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>rhode_skin</td>
+<td>0.017737</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>rhode_phone_case</td>
+<td>-0.005137</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>rhode_lip_treatment</td>
+<td>-0.018320</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>glazed_donut_skin</td>
+<td>-0.086095</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>hailey_bieber_skincare</td>
+<td>-0.186284</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="762938c6-3ff3-498d-a39d-696a5de44934" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>correlation_table.to_csv(<span class="st">"rhode_event_search_correlation.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="c18aacc9-4a7e-46ff-8809-ba5330e38e29" class="cell" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>plt.bar(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    correlation_table[<span class="st">"search_term"</span>],</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    correlation_table[<span class="st">"correlation_between_event_month_and_search_interest"</span>]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Correlation Between Rhode Event Months and Google Search Interest"</span>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Search Term"</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Correlation"</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DOW6_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The correlation chart suggests that the relationship between Rhode event months and Google search interest is weak overall. Most search terms have correlations close to zero, meaning that simply coding a month as an “event month” does not strongly predict higher search interest. The only slightly positive relationship appears for “rhode_skin,” which makes sense because this is the broadest brand-level term and is most likely to respond to major Rhode events like the brand launch, retail expansion, or acquisition news.</p>
+<p>However, several terms show slightly negative correlations, including “glazed_donut_skin” and “Hailey Bieber skincare.” This does not necessarily mean that Rhode events reduced search interest. Rather, it suggests that these broader beauty and celebrity-related terms may not align neatly with official brand events. Their search patterns may be shaped by other factors, such as TikTok trends, celebrity discourse, seasonal beauty interest, or media coverage that falls outside the event dates coded in this dataset.</p>
+<p>Overall, this chart complicates the original hypothesis. While the timeline graphs may show individual spikes around specific product moments, the correlation results suggest that Rhode’s search attention is not explained by event timing alone. Public interest appears to be more uneven and culturally driven, especially for terms connected to Hailey Bieber’s broader beauty image rather than specific Rhode product launches.</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/maggiebg\.github\.io\/comm3180_S26_Blog\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
